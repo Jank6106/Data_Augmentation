@@ -29,13 +29,13 @@ IMAGE_HEIGHT: int = 512
 # ---------------------------------------------------------------------------
 # Augmentation probabilities
 # ---------------------------------------------------------------------------
-ROTATE_PROBABILITY: float = 0.5
-BLUR_PROBABILITY: float = 0.3
-BRIGHTNESS_PROBABILITY: float = 0.5
-CONTRAST_PROBABILITY: float = 0.5
-GAMMA_PROBABILITY: float = 0.3
-NOISE_PROBABILITY: float = 0.4
-PERSPECTIVE_PROBABILITY: float = 0.3
+ROTATE_PROBABILITY: float = 0.6
+BLUR_PROBABILITY: float = 0.5
+BRIGHTNESS_PROBABILITY: float = 0.7
+CONTRAST_PROBABILITY: float = 0.6
+GAMMA_PROBABILITY: float = 0.4
+NOISE_PROBABILITY: float = 0.5
+PERSPECTIVE_PROBABILITY: float = 0.7
 RESIZE_PROBABILITY: float = 0.0
 
 # ---------------------------------------------------------------------------
@@ -43,6 +43,7 @@ RESIZE_PROBABILITY: float = 0.0
 # ---------------------------------------------------------------------------
 ROTATE_LIMIT: int = 10
 ROTATE_BORDER_MODE: int = 0  # cv2.BORDER_CONSTANT
+ROTATE_BORDER_VALUE: tuple[int, int, int] = (255, 255, 255)
 
 # ---------------------------------------------------------------------------
 # Blur parameters
@@ -67,7 +68,7 @@ GAMMA_LIMIT: tuple[float, float] = (80.0, 120.0)
 # ---------------------------------------------------------------------------
 # Noise parameters
 # ---------------------------------------------------------------------------
-NOISE_VAR_LIMIT: tuple[float, float] = (0.01, 0.05)
+NOISE_VAR_LIMIT: tuple[float, float] = (0.03, 0.06)
 
 # ---------------------------------------------------------------------------
 # Perspective parameters
