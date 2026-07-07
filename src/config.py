@@ -18,7 +18,9 @@ OUTPUT_DIR: str = os.path.join(BASE_DIR, "data", "output")
 # Dataset settings
 # ---------------------------------------------------------------------------
 SUPPORTED_EXTENSIONS: tuple[str, ...] = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
-SAMPLES_PER_IMAGE: int = 5
+PIPELINE_1_SAMPLES: int = 4
+PIPELINE_2_SAMPLES: int = 2
+SAMPLES_PER_IMAGE: int = PIPELINE_1_SAMPLES + PIPELINE_2_SAMPLES
 
 # ---------------------------------------------------------------------------
 # Image size
@@ -37,6 +39,7 @@ GAMMA_PROBABILITY: float = 0.4
 NOISE_PROBABILITY: float = 0.5
 PERSPECTIVE_PROBABILITY: float = 0.7
 RESIZE_PROBABILITY: float = 0.0
+# LIGHTING_BLOCK_PROBABILITY: float = 1.0
 
 # ---------------------------------------------------------------------------
 # Rotation parameters
@@ -74,6 +77,13 @@ NOISE_VAR_LIMIT: tuple[float, float] = (0.03, 0.06)
 # Perspective parameters
 # ---------------------------------------------------------------------------
 PERSPECTIVE_SCALE: tuple[float, float] = (0.02, 0.05)
+
+# ---------------------------------------------------------------------------
+# Lighting Gradient parameters
+# ---------------------------------------------------------------------------
+GRADIENT_PROBABILITY: float = 1.0
+GRADIENT_INTENSITY: tuple[float, float] = (0.1, 1.0)   # mức chênh lệch sáng tối
+GRADIENT_DIRECTION: tuple[float, float] = (0.5, 0.5)   # xác suất ngang/dọc
 
 # ---------------------------------------------------------------------------
 # Resize parameters

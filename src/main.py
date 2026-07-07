@@ -15,8 +15,9 @@ def main() -> None:
     print("  Woodblock Data Augmentation Pipeline")
     print("=" * 60)
 
-    aug_pipeline = pipeline.build()
-    total = dataset.process(aug_pipeline)
+    pipeline1 = pipeline.build_pipeline1()
+    pipeline2 = pipeline.build_pipeline2()
+    total = dataset.process(pipeline1, pipeline2)
 
     print(f"\nDone. {total} augmented images saved.")
 

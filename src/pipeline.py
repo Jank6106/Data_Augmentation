@@ -13,6 +13,7 @@ from src.augmentations import (
     brightness,
     contrast,
     gamma,
+    gradient,
     noise,
     perspective,
     resize,
@@ -20,11 +21,11 @@ from src.augmentations import (
 )
 
 
-def build() -> A.Compose:
-    """Build the complete augmentation pipeline.
+def build_pipeline1() -> A.Compose:
+    """Build the main augmentation pipeline (excluding gradient).
 
     Returns:
-        An Albumentations Compose pipeline combining all augmentation modules.
+        An Albumentations Compose pipeline.
     """
     pipeline = A.Compose([
         rotate.build(),
@@ -34,6 +35,19 @@ def build() -> A.Compose:
         contrast.build(),
         gamma.build(),
         noise.build(),
+        resize.build(),
+    ])
+    return pipeline
+
+
+def build_pipeline2() -> A.Compose:
+    """Build the second augmentation pipeline containing only the gradient module.
+
+    Returns:
+        An Albumentations Compose pipeline.
+    """
+    pipeline = A.Compose([
+        gradient.build(),
         resize.build(),
     ])
     return pipeline

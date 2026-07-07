@@ -94,14 +94,15 @@ def _build_output_filename(
     return f"{source_name}_aug_{sample_index:03d}.png"
 
 
-def process(pipeline: A.Compose) -> int:
-    """Run the augmentation pipeline on every image in the input directory.
+def process(pipeline1: A.Compose, pipeline2: A.Compose) -> int:
+    """Run the augmentation pipelines on every image in the input directory.
 
-    For each source image, ``config.SAMPLES_PER_IMAGE`` augmented copies
-    are generated and saved to the output directory.
+    For each source image, ``config.PIPELINE_1_SAMPLES`` copies are generated using
+    pipeline 1, and ``config.PIPELINE_2_SAMPLES`` copies are generated using pipeline 2.
 
     Args:
-        pipeline: A pre-built Albumentations Compose pipeline.
+        pipeline1: Albumentations Compose pipeline for main augmentations.
+        pipeline2: Albumentations Compose pipeline for gradient illumination.
 
     Returns:
         The total number of augmented images saved.
@@ -127,11 +128,23 @@ def process(pipeline: A.Compose) -> int:
         image_output_dir = os.path.join(output_dir, f"{source_name}_aug")
         os.makedirs(image_output_dir, exist_ok=True)
 
-        for i in range(config.SAMPLES_PER_IMAGE):
-            augmented: dict = pipeline(image=image)
+        # Generate k samples using pipeline 1
+        for i in range(config.PIPELINE_1_SAMPLES):
+            augmented: dict = pipeline1(image=image)
             augmented_image: np.ndarray = augmented["image"]
 
             filename: str = _build_output_filename(source_name, i)
+            output_path: str = os.path.join(image_output_dir, filename)
+
+            _save_image(augmented_image, output_path)
+            total_saved += 1
+
+        # Generate n - k samples using pipeline 2
+        for i in range(config.PIPELINE_2_SAMPLES):
+            augmented: dict = pipeline2(image=image)
+            augmented_image: np.ndarray = augmented["image"]
+
+            filename: str = _build_output_filename(source_name, config.PIPELINE_1_SAMPLES + i)
             output_path: str = os.path.join(image_output_dir, filename)
 
             _save_image(augmented_image, output_path)
