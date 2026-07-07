@@ -15,9 +15,8 @@ class RandomLightingGradient(A.ImageOnlyTransform):
     def __init__(self,
                  intensity_limit=(0.1, 0.3),
                  direction_prob=(0.5, 0.5),
-                 always_apply=False,
                  p=0.5):
-        super().__init__(always_apply, p)
+        super().__init__(p=p)
         self.intensity_limit = intensity_limit
         self.direction_prob = direction_prob
 

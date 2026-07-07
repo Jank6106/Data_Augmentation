@@ -82,8 +82,8 @@ PERSPECTIVE_SCALE: tuple[float, float] = (0.02, 0.05)
 # Lighting Gradient parameters
 # ---------------------------------------------------------------------------
 GRADIENT_PROBABILITY: float = 1.0
-GRADIENT_INTENSITY: tuple[float, float] = (0.1, 1.0)   # mức chênh lệch sáng tối
-GRADIENT_DIRECTION: tuple[float, float] = (0.5, 0.5)   # xác suất ngang/dọc
+GRADIENT_INTENSITY: tuple[float, float] = (0.3, 1.0)   # mức chênh lệch sáng tối
+GRADIENT_DIRECTION: tuple[float, float] = (0.3, 1.0)   # xác suất ngang/dọc
 
 # ---------------------------------------------------------------------------
 # Resize parameters
