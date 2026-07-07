@@ -122,13 +122,17 @@ def process(pipeline: A.Compose) -> int:
     for path in tqdm(image_paths, desc="Processing images"):
         image: np.ndarray = _read_image(path)
         source_name: str = Path(path).stem
+        
+        # Create a dedicated folder for each image's augmented copies
+        image_output_dir = os.path.join(output_dir, f"{source_name}_aug")
+        os.makedirs(image_output_dir, exist_ok=True)
 
         for i in range(config.SAMPLES_PER_IMAGE):
             augmented: dict = pipeline(image=image)
             augmented_image: np.ndarray = augmented["image"]
 
             filename: str = _build_output_filename(source_name, i)
-            output_path: str = os.path.join(output_dir, filename)
+            output_path: str = os.path.join(image_output_dir, filename)
 
             _save_image(augmented_image, output_path)
             total_saved += 1
