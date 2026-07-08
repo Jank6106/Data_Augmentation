@@ -50,8 +50,8 @@ SALT_PEPPER_VS_PEPPER: tuple[float, float] = (0.5, 0.8)
 PIPELINE_1_GAMMA_LIMIT: tuple[float, float] = (80.0, 120.0)      # 0.8 to 1.2
 PIPELINE_1_BRIGHTNESS_LIMIT: tuple[float, float] = (-0.2, 0.2)   # 0.8 to 1.2
 PIPELINE_1_CONTRAST_LIMIT: tuple[float, float] = (-0.2, 0.2)     # 0.8 to 1.2
-PIPELINE_1_GRADIENT_INTENSITY: tuple[float, float] = (0.05, 1.0)
-PIPELINE_1_GRADIENT_DIRECTION: tuple[float, float] = (0.05, 1.0)
+PIPELINE_1_GRADIENT_INTENSITY: tuple[float, float] = (0.3, 0.5)
+PIPELINE_1_GRADIENT_DIRECTION: tuple[float, float] = (0.1, 0.25)
 
 # Pipeline 2: Angle/Warp simulation (Mô phỏng góc chụp/cong vênh)
 PIPELINE_2_ROTATE_LIMIT: int = 10                                # -10 to 10 degrees
