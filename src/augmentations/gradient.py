@@ -41,10 +41,23 @@ class RandomLightingGradient(A.ImageOnlyTransform):
         return ('intensity_limit', 'direction_prob')
 
 
-def build() -> RandomLightingGradient:
-    """Build gradient transform with project defaults."""
+def build(
+    intensity_limit: tuple[float, float] | None = None,
+    direction_prob: tuple[float, float] | None = None,
+    p: float | None = None,
+) -> RandomLightingGradient:
+    """Build gradient transform with defaults or overrides.
+
+    Args:
+        intensity_limit: Range of gradient intensity. If None, uses config default.
+        direction_prob: Probability of horizontal vs vertical direction. If None, uses config default.
+        p: Probability of applying the transform. If None, uses config default.
+
+    Returns:
+        A RandomLightingGradient transform.
+    """
     return RandomLightingGradient(
-        intensity_limit=config.GRADIENT_INTENSITY,
-        direction_prob=config.GRADIENT_DIRECTION,
-        p=config.GRADIENT_PROBABILITY
+        intensity_limit=intensity_limit if intensity_limit is not None else config.GRADIENT_INTENSITY,
+        direction_prob=direction_prob if direction_prob is not None else config.GRADIENT_DIRECTION,
+        p=p if p is not None else config.GRADIENT_PROBABILITY
     )

@@ -10,13 +10,20 @@ import albumentations as A
 from src import config
 
 
-def build() -> A.Perspective:
+def build(
+    scale: tuple[float, float] | float | None = None,
+    p: float | None = None,
+) -> A.Perspective:
     """Build a perspective distortion transform.
 
+    Args:
+        scale: Limit range for perspective shift. If None, uses config default.
+        p: Probability of applying the transform. If None, uses config default.
+
     Returns:
-        An Albumentations Perspective transform configured with project defaults.
+        An Albumentations Perspective transform configured with defaults or overrides.
     """
     return A.Perspective(
-        scale=config.PERSPECTIVE_SCALE,
-        p=config.PERSPECTIVE_PROBABILITY,
+        scale=scale if scale is not None else config.PERSPECTIVE_SCALE,
+        p=p if p is not None else config.PERSPECTIVE_PROBABILITY,
     )

@@ -10,13 +10,20 @@ import albumentations as A
 from src import config
 
 
-def build() -> A.RandomGamma:
+def build(
+    gamma_limit: tuple[float, float] | float | None = None,
+    p: float | None = None,
+) -> A.RandomGamma:
     """Build a gamma correction transform.
 
+    Args:
+        gamma_limit: Limit range for gamma. If None, uses config default.
+        p: Probability of applying the transform. If None, uses config default.
+
     Returns:
-        An Albumentations RandomGamma transform configured with project defaults.
+        An Albumentations RandomGamma transform configured with defaults or overrides.
     """
     return A.RandomGamma(
-        gamma_limit=config.GAMMA_LIMIT,
-        p=config.GAMMA_PROBABILITY,
+        gamma_limit=gamma_limit if gamma_limit is not None else config.GAMMA_LIMIT,
+        p=p if p is not None else config.GAMMA_PROBABILITY,
     )

@@ -94,15 +94,15 @@ def _build_output_filename(
     return f"{source_name}_aug_{sample_index:03d}.png"
 
 
-def process(pipeline1: A.Compose, pipeline2: A.Compose) -> int:
+def process(pipelines: dict[str, A.Compose]) -> int:
     """Run the augmentation pipelines on every image in the input directory.
 
-    For each source image, ``config.PIPELINE_1_SAMPLES`` copies are generated using
-    pipeline 1, and ``config.PIPELINE_2_SAMPLES`` copies are generated using pipeline 2.
+    For each source image, samples are generated using all provided pipelines,
+    controlled by configuration variables like ``config.PIPELINE_1_SAMPLES``, etc.
 
     Args:
-        pipeline1: Albumentations Compose pipeline for main augmentations.
-        pipeline2: Albumentations Compose pipeline for gradient illumination.
+        pipelines: Dictionary mapping pipeline names (e.g. "pipeline1") to
+            Albumentations Compose pipelines.
 
     Returns:
         The total number of augmented images saved.
@@ -128,26 +128,18 @@ def process(pipeline1: A.Compose, pipeline2: A.Compose) -> int:
         image_output_dir = os.path.join(output_dir, f"{source_name}_aug")
         os.makedirs(image_output_dir, exist_ok=True)
 
-        # Generate k samples using pipeline 1
-        for i in range(config.PIPELINE_1_SAMPLES):
-            augmented: dict = pipeline1(image=image)
-            augmented_image: np.ndarray = augmented["image"]
+        sample_index = 0
+        for pipe_key, pipe in pipelines.items():
+            num_samples = getattr(config, f"{pipe_key.upper()}_SAMPLES", 0)
+            for _ in range(num_samples):
+                augmented = pipe(image=image)
+                augmented_image = augmented["image"]
 
-            filename: str = _build_output_filename(source_name, i)
-            output_path: str = os.path.join(image_output_dir, filename)
+                filename = _build_output_filename(source_name, sample_index)
+                output_path = os.path.join(image_output_dir, filename)
 
-            _save_image(augmented_image, output_path)
-            total_saved += 1
-
-        # Generate n - k samples using pipeline 2
-        for i in range(config.PIPELINE_2_SAMPLES):
-            augmented: dict = pipeline2(image=image)
-            augmented_image: np.ndarray = augmented["image"]
-
-            filename: str = _build_output_filename(source_name, config.PIPELINE_1_SAMPLES + i)
-            output_path: str = os.path.join(image_output_dir, filename)
-
-            _save_image(augmented_image, output_path)
-            total_saved += 1
+                _save_image(augmented_image, output_path)
+                sample_index += 1
+                total_saved += 1
 
     return total_saved

@@ -9,13 +9,20 @@ import albumentations as A
 from src import config
 
 
-def build() -> A.GaussNoise:
+def build(
+    std_range: tuple[float, float] | None = None,
+    p: float | None = None,
+) -> A.GaussNoise:
     """Build a Gaussian noise transform.
 
+    Args:
+        std_range: Standard deviation range. If None, uses config default.
+        p: Probability of applying the transform. If None, uses config default.
+
     Returns:
-        An Albumentations GaussNoise transform configured with project defaults.
+        An Albumentations GaussNoise transform configured with defaults or overrides.
     """
     return A.GaussNoise(
-        std_range=config.NOISE_VAR_LIMIT,
-        p=config.NOISE_PROBABILITY,
+        std_range=std_range if std_range is not None else config.NOISE_VAR_LIMIT,
+        p=p if p is not None else config.NOISE_PROBABILITY,
     )

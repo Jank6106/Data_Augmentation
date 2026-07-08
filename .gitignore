@@ -9,8 +9,10 @@ venv/
 ENV/
 env/
 
-# Data directories (heavy output and test files)
+# Data
+data/input/
 data/output/
+data/test_pipelines/
 data/test_gradient/
 
 # IDEs and OS files
