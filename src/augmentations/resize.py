@@ -25,7 +25,7 @@ def build(
         An Albumentations Resize transform configured with defaults or overrides.
     """
     return A.Resize(
-        height=height if height is not None else config.RESIZE_HEIGHT,
-        width=width if width is not None else config.RESIZE_WIDTH,
+        height=height if height is not None else config.IMAGE_HEIGHT,
+        width=width if width is not None else config.IMAGE_WIDTH,
         p=p if p is not None else config.RESIZE_PROBABILITY,
     )

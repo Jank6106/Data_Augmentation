@@ -17,12 +17,12 @@ def build(
 
     Args:
         std_range: Standard deviation range. If None, uses config default.
-        p: Probability of applying the transform. If None, uses config default.
+        p: Probability of applying the transform. If None, defaults to 1.0.
 
     Returns:
         An Albumentations GaussNoise transform configured with defaults or overrides.
     """
     return A.GaussNoise(
-        std_range=std_range if std_range is not None else config.NOISE_VAR_LIMIT,
-        p=p if p is not None else config.NOISE_PROBABILITY,
+        std_range=std_range if std_range is not None else config.PIPELINE_3_NOISE_VAR_LIMIT,
+        p=p if p is not None else 1.0,
     )

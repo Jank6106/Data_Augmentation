@@ -2,7 +2,7 @@
 Augmentation pipeline module.
 
 Combines all individual augmentation modules into a single
-Albumentations Compose pipeline. No augmentation implementation
+Albumentations Compose pipeline. No augmentation parameters or logic
 should exist in this file.
 """
 
@@ -14,34 +14,29 @@ from src.augmentations import (
     contrast,
     elastic,
     gamma,
+    gradient,
     motion_blur,
     noise,
     perspective,
     resize,
     rotate,
     salt_pepper,
-    gradient
 )
-from src import config
 
 
 def build_pipeline1() -> A.Compose:
     """Build Pipeline 1 (Lighting simulation):
-    resize -> gamma (0.8–1.2) -> brightness (0.8–1.2) -> contrast (0.8–1.2).
+    resize -> gamma (0.8–1.2) -> brightness (0.8–1.2) -> contrast (0.8–1.2) -> gradient.
 
     Returns:
         An Albumentations Compose pipeline.
     """
     pipeline = A.Compose([
-        resize.build(p=config.RESIZE_PROBABILITY),
-        gamma.build(gamma_limit=config.PIPELINE_1_GAMMA_LIMIT, p=1.0),
-        brightness.build(brightness_limit=config.PIPELINE_1_BRIGHTNESS_LIMIT, p=1.0),
-        contrast.build(contrast_limit=config.PIPELINE_1_CONTRAST_LIMIT, p=1.0),
-        gradient.build(
-            intensity_limit=config.PIPELINE_1_GRADIENT_INTENSITY,
-            direction_prob=config.PIPELINE_1_GRADIENT_DIRECTION,
-            p=1.0
-        )
+        resize.build(),
+        gamma.build(),
+        brightness.build(),
+        contrast.build(),
+        gradient.build(),
     ])
     return pipeline
 
@@ -54,10 +49,10 @@ def build_pipeline2() -> A.Compose:
         An Albumentations Compose pipeline.
     """
     pipeline = A.Compose([
-        resize.build(p=config.RESIZE_PROBABILITY),
-        rotate.build(limit=config.PIPELINE_2_ROTATE_LIMIT, p=1.0),
-        perspective.build(scale=config.PIPELINE_2_PERSPECTIVE_SCALE, p=1.0),
-        elastic.build(alpha=config.PIPELINE_2_ELASTIC_ALPHA, sigma=config.PIPELINE_2_ELASTIC_SIGMA, p=1.0),
+        resize.build(),
+        rotate.build(),
+        perspective.build(),
+        elastic.build(),
     ])
     return pipeline
 
@@ -70,12 +65,12 @@ def build_pipeline3() -> A.Compose:
         An Albumentations Compose pipeline.
     """
     pipeline = A.Compose([
-        resize.build(p=config.RESIZE_PROBABILITY),
+        resize.build(),
         A.OneOf([
-            motion_blur.build(blur_limit=config.PIPELINE_3_BLUR_LIMIT, p=1.0),
-            blur.build(blur_limit=config.PIPELINE_3_BLUR_LIMIT, p=1.0),
+            motion_blur.build(),
+            blur.build(),
         ], p=1.0),
-        noise.build(std_range=config.PIPELINE_3_NOISE_VAR_LIMIT, p=1.0),
-        salt_pepper.build(amount=config.PIPELINE_3_SALT_PEPPER_AMOUNT, p=1.0),
+        noise.build(),
+        salt_pepper.build(),
     ])
     return pipeline

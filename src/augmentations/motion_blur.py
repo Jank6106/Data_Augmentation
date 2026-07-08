@@ -17,12 +17,12 @@ def build(
 
     Args:
         blur_limit: Maximum kernel size for motion blur. If None, uses config default.
-        p: Probability of applying the transform. If None, uses config default.
+        p: Probability of applying the transform. If None, defaults to 1.0.
 
     Returns:
         An Albumentations MotionBlur transform configured with defaults or overrides.
     """
     return A.MotionBlur(
-        blur_limit=blur_limit if blur_limit is not None else config.MOTION_BLUR_LIMIT,
-        p=p if p is not None else config.MOTION_BLUR_PROBABILITY,
+        blur_limit=blur_limit if blur_limit is not None else config.PIPELINE_3_BLUR_LIMIT,
+        p=p if p is not None else 1.0,
     )

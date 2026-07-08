@@ -51,13 +51,13 @@ def build(
     Args:
         intensity_limit: Range of gradient intensity. If None, uses config default.
         direction_prob: Probability of horizontal vs vertical direction. If None, uses config default.
-        p: Probability of applying the transform. If None, uses config default.
+        p: Probability of applying the transform. If None, defaults to 1.0.
 
     Returns:
         A RandomLightingGradient transform.
     """
     return RandomLightingGradient(
-        intensity_limit=intensity_limit if intensity_limit is not None else config.GRADIENT_INTENSITY,
-        direction_prob=direction_prob if direction_prob is not None else config.GRADIENT_DIRECTION,
-        p=p if p is not None else config.GRADIENT_PROBABILITY
+        intensity_limit=intensity_limit if intensity_limit is not None else config.PIPELINE_1_GRADIENT_INTENSITY,
+        direction_prob=direction_prob if direction_prob is not None else config.PIPELINE_1_GRADIENT_DIRECTION,
+        p=p if p is not None else 1.0
     )

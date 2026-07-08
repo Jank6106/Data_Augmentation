@@ -20,13 +20,13 @@ def build(
 
     Args:
         contrast_limit: Limit range for contrast. If None, uses config default.
-        p: Probability of applying the transform. If None, uses config default.
+        p: Probability of applying the transform. If None, defaults to 1.0.
 
     Returns:
         An Albumentations RandomBrightnessContrast transform (brightness off).
     """
     return A.RandomBrightnessContrast(
         brightness_limit=(0.0, 0.0),
-        contrast_limit=contrast_limit if contrast_limit is not None else config.CONTRAST_LIMIT,
-        p=p if p is not None else config.CONTRAST_PROBABILITY,
+        contrast_limit=contrast_limit if contrast_limit is not None else config.PIPELINE_1_CONTRAST_LIMIT,
+        p=p if p is not None else 1.0,
     )
