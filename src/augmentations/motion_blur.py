@@ -23,6 +23,6 @@ def build(
         An Albumentations MotionBlur transform configured with defaults or overrides.
     """
     return A.MotionBlur(
-        blur_limit=blur_limit if blur_limit is not None else config.PIPELINE_3_BLUR_LIMIT,
+        blur_limit=blur_limit if blur_limit is not None else config.PIPELINE_BLUR_LIMIT,
         p=p if p is not None else 1.0,
     )

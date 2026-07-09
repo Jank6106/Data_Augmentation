@@ -23,6 +23,6 @@ def build(
         An Albumentations GaussNoise transform configured with defaults or overrides.
     """
     return A.GaussNoise(
-        std_range=std_range if std_range is not None else config.PIPELINE_3_NOISE_VAR_LIMIT,
+        std_range=std_range if std_range is not None else config.PIPELINE_NOISE_VAR_LIMIT,
         p=p if p is not None else 1.0,
     )

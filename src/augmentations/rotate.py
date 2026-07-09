@@ -23,7 +23,7 @@ def build(
         An Albumentations Rotate transform configured with defaults or overrides.
     """
     return A.Rotate(
-        limit=limit if limit is not None else config.PIPELINE_2_ROTATE_LIMIT,
+        limit=limit if limit is not None else config.PIPELINE_ROTATE_LIMIT,
         border_mode=config.BORDER_MODE,
         fill=config.BORDER_VALUE,
         p=p if p is not None else 1.0,

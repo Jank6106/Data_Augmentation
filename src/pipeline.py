@@ -2,8 +2,7 @@
 Augmentation pipeline module.
 
 Combines all individual augmentation modules into a single
-Albumentations Compose pipeline. No augmentation parameters or logic
-should exist in this file.
+Albumentations Compose pipeline.
 """
 
 import albumentations as A
@@ -11,6 +10,7 @@ import albumentations as A
 from src.augmentations import (
     blur,
     brightness,
+    clahe,
     contrast,
     elastic,
     gamma,
@@ -21,56 +21,99 @@ from src.augmentations import (
     resize,
     rotate,
     salt_pepper,
+    shadow,
 )
 
 
-def build_pipeline1() -> A.Compose:
-    """Build Pipeline 1 (Lighting simulation):
-    resize -> gamma (0.8–1.2) -> brightness (0.8–1.2) -> contrast (0.8–1.2) -> gradient.
+# ===========================
+# Single Augmentation
+# ===========================
 
-    Returns:
-        An Albumentations Compose pipeline.
-    """
-    pipeline = A.Compose([
-        resize.build(),
-        gamma.build(),
-        brightness.build(),
-        contrast.build(),
-        gradient.build(),
-    ])
-    return pipeline
+def build_single_pipeline() -> A.Compose:
+    """Apply exactly ONE augmentation."""
 
-
-def build_pipeline2() -> A.Compose:
-    """Build Pipeline 2 (Angle/Warp simulation):
-    resize -> rotate (-10° to 10°) -> perspective (shift < 0.1) -> elastic (alpha 20–30, sigma 4–5).
-
-    Returns:
-        An Albumentations Compose pipeline.
-    """
-    pipeline = A.Compose([
-        resize.build(),
-        rotate.build(),
-        perspective.build(),
-        elastic.build(),
-    ])
-    return pipeline
-
-
-def build_pipeline3() -> A.Compose:
-    """Build Pipeline 3 (Blur/Noise simulation):
-    resize -> motion_blur or blur (kernel <= 3x3) -> noise (var < 0.01) -> salt_pepper (prob < 0.02).
-
-    Returns:
-        An Albumentations Compose pipeline.
-    """
     pipeline = A.Compose([
         resize.build(),
         A.OneOf([
+            gamma.build(),
+            brightness.build(),
+            contrast.build(),
+            gradient.build(),
+            clahe.build(),
+            shadow.build(),
+
+            rotate.build(),
+            perspective.build(),
+            elastic.build(),
+
             motion_blur.build(),
             blur.build(),
+            noise.build(),
+            salt_pepper.build(),
         ], p=1.0),
-        noise.build(),
-        salt_pepper.build(),
     ])
+
+    return pipeline
+
+
+# ===========================
+# Multiple Augmentation
+# ===========================
+
+def build_multi_pipeline() -> A.Compose:
+    """Apply one complete augmentation pipeline."""
+
+    pipeline = A.Compose([
+        resize.build(),
+
+        A.OneOf([
+            # Lighting
+            A.Compose([
+                gamma.build(),
+                brightness.build(),
+                contrast.build(),
+                gradient.build(),
+                clahe.build(),
+                shadow.build(),
+            ]),
+
+            # Geometry
+            A.Compose([
+                rotate.build(),
+                perspective.build(),
+                elastic.build(),
+            ]),
+
+            # Blur / Noise
+            A.Compose([
+                A.OneOf([
+                    motion_blur.build(),
+                    blur.build(),
+                ], p=1.0),
+                noise.build(),
+                salt_pepper.build(),
+            ]),
+        ], p=1.0)
+    ])
+
+    return pipeline
+
+
+# ===========================
+# Final Pipeline
+# ===========================
+
+def build_pipeline() -> A.Compose:
+    """
+    Randomly choose between:
+
+    - Single augmentation
+    - Multiple augmentation
+    """
+
+    pipeline = A.OneOf([
+        build_single_pipeline(),
+        build_multi_pipeline(),
+    ], p=1.0)
+
     return pipeline

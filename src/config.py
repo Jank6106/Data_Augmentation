@@ -20,6 +20,7 @@ OUTPUT_DIR: str = os.path.join(BASE_DIR, "data", "output")
 SUPPORTED_EXTENSIONS: tuple[str, ...] = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
 
 # Sample generation counts for each pipeline
+AUGMENTATION_SAMPLES: int = 5
 PIPELINE_1_SAMPLES: int = 3
 PIPELINE_2_SAMPLES: int = 3
 PIPELINE_3_SAMPLES: int = 2
@@ -47,19 +48,28 @@ SALT_PEPPER_VS_PEPPER: tuple[float, float] = (0.5, 0.8)
 # ===========================================================================
 
 # Pipeline 1: Lighting simulation (Mô phỏng ánh sáng)
-PIPELINE_1_GAMMA_LIMIT: tuple[float, float] = (80.0, 120.0)      # 0.8 to 1.2
-PIPELINE_1_BRIGHTNESS_LIMIT: tuple[float, float] = (-0.2, 0.2)   # 0.8 to 1.2
-PIPELINE_1_CONTRAST_LIMIT: tuple[float, float] = (-0.2, 0.2)     # 0.8 to 1.2
-PIPELINE_1_GRADIENT_INTENSITY: tuple[float, float] = (0.3, 0.5)
-PIPELINE_1_GRADIENT_DIRECTION: tuple[float, float] = (0.1, 0.25)
+PIPELINE_GAMMA_LIMIT: tuple[float, float] = (80.0, 120.0)      # 0.8 to 1.2
+PIPELINE_BRIGHTNESS_LIMIT: tuple[float, float] = (-0.2, 0.2)   # 0.8 to 1.2
+PIPELINE_CONTRAST_LIMIT: tuple[float, float] = (-0.2, 0.2)     # 0.8 to 1.2
+PIPELINE_GRADIENT_INTENSITY: tuple[float, float] = (0.3, 0.5)
+PIPELINE_GRADIENT_DIRECTION: tuple[float, float] = (0.1, 0.25)
 
 # Pipeline 2: Angle/Warp simulation (Mô phỏng góc chụp/cong vênh)
-PIPELINE_2_ROTATE_LIMIT: int = 10                                # -10 to 10 degrees
-PIPELINE_2_PERSPECTIVE_SCALE: tuple[float, float] = (0.02, 0.05) # Shift < 0.1
-PIPELINE_2_ELASTIC_ALPHA: float = 25.0                           # Alpha 20-30
-PIPELINE_2_ELASTIC_SIGMA: float = 4.5                            # Sigma 4-5
+PIPELINE_ROTATE_LIMIT: int = 10                                # -10 to 10 degrees
+PIPELINE_PERSPECTIVE_SCALE: tuple[float, float] = (0.02, 0.05) # Shift < 0.1
+PIPELINE_ELASTIC_ALPHA: float = 25.0                           # Alpha 20-30
+PIPELINE_ELASTIC_SIGMA: float = 4.5                            # Sigma 4-5
 
 # Pipeline 3: Blur/Noise simulation (Mô phỏng mờ/nhiễu nền)
-PIPELINE_3_BLUR_LIMIT: tuple[int, int] = (5, 5)                  # Kernel size (e.g. 5x5)
-PIPELINE_3_NOISE_VAR_LIMIT: tuple[float, float] = (0.1, 0.2)     # Std range
-PIPELINE_3_SALT_PEPPER_AMOUNT: tuple[float, float] = (0.03, 0.04) # Prob range
+PIPELINE_BLUR_LIMIT: tuple[int, int] = (5, 5)                  # Kernel size (e.g. 5x5)
+PIPELINE_NOISE_VAR_LIMIT: tuple[float, float] = (0.1, 0.2)     # Std range
+PIPELINE_SALT_PEPPER_AMOUNT: tuple[float, float] = (0.03, 0.04) # Prob range
+
+# CLAHE (Contrast Limited Adaptive Histogram Equalization) defaults
+CLAHE_CLIP_LIMIT = (1.0, 3.0)
+CLAHE_TILE_GRID_SIZE = (8, 8)
+
+# Shadow and highlight adjustment defaults
+SHADOW_ROI = (0.0, 0.5, 1.0, 1.0)
+SHADOW_NUM_LIMIT = (1, 2)
+SHADOW_DIMENSION = 5

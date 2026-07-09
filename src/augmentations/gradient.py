@@ -57,7 +57,7 @@ def build(
         A RandomLightingGradient transform.
     """
     return RandomLightingGradient(
-        intensity_limit=intensity_limit if intensity_limit is not None else config.PIPELINE_1_GRADIENT_INTENSITY,
-        direction_prob=direction_prob if direction_prob is not None else config.PIPELINE_1_GRADIENT_DIRECTION,
+        intensity_limit=intensity_limit if intensity_limit is not None else config.PIPELINE_GRADIENT_INTENSITY,
+        direction_prob=direction_prob if direction_prob is not None else config.PIPELINE_GRADIENT_DIRECTION,
         p=p if p is not None else 1.0
     )

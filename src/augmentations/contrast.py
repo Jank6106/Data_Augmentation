@@ -27,6 +27,6 @@ def build(
     """
     return A.RandomBrightnessContrast(
         brightness_limit=(0.0, 0.0),
-        contrast_limit=contrast_limit if contrast_limit is not None else config.PIPELINE_1_CONTRAST_LIMIT,
+        contrast_limit=contrast_limit if contrast_limit is not None else config.PIPELINE_CONTRAST_LIMIT,
         p=p if p is not None else 1.0,
     )

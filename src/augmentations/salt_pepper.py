@@ -25,7 +25,7 @@ def build(
         An Albumentations SaltAndPepper transform configured with defaults or overrides.
     """
     return A.SaltAndPepper(
-        amount=amount if amount is not None else config.PIPELINE_3_SALT_PEPPER_AMOUNT,
+        amount=amount if amount is not None else config.PIPELINE_SALT_PEPPER_AMOUNT,
         salt_vs_pepper=salt_vs_pepper if salt_vs_pepper is not None else config.SALT_PEPPER_VS_PEPPER,
         p=p if p is not None else 1.0,
     )

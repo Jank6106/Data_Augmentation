@@ -16,10 +16,9 @@ def main() -> None:
     print("=" * 60)
 
     pipelines = {
-        "pipeline_1": pipeline.build_pipeline1(),
-        "pipeline_2": pipeline.build_pipeline2(),
-        "pipeline_3": pipeline.build_pipeline3(),
+        "augmentation": pipeline.build_pipeline(),
     }
+
     total = dataset.process(pipelines)
 
     print(f"\nDone. {total} augmented images saved.")

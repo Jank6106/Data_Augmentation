@@ -24,6 +24,6 @@ def build(
         An Albumentations RandomGamma transform configured with defaults or overrides.
     """
     return A.RandomGamma(
-        gamma_limit=gamma_limit if gamma_limit is not None else config.PIPELINE_1_GAMMA_LIMIT,
+        gamma_limit=gamma_limit if gamma_limit is not None else config.PIPELINE_GAMMA_LIMIT,
         p=p if p is not None else 1.0,
     )

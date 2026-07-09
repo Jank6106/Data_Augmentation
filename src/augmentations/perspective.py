@@ -24,6 +24,6 @@ def build(
         An Albumentations Perspective transform configured with defaults or overrides.
     """
     return A.Perspective(
-        scale=scale if scale is not None else config.PIPELINE_2_PERSPECTIVE_SCALE,
+        scale=scale if scale is not None else config.PIPELINE_PERSPECTIVE_SCALE,
         p=p if p is not None else 1.0,
     )

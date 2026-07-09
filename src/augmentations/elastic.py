@@ -25,8 +25,8 @@ def build(
         An Albumentations ElasticTransform configured with defaults or overrides.
     """
     return A.ElasticTransform(
-        alpha=alpha if alpha is not None else config.PIPELINE_2_ELASTIC_ALPHA,
-        sigma=sigma if sigma is not None else config.PIPELINE_2_ELASTIC_SIGMA,
+        alpha=alpha if alpha is not None else config.PIPELINE_ELASTIC_ALPHA,
+        sigma=sigma if sigma is not None else config.PIPELINE_ELASTIC_SIGMA,
         border_mode=config.BORDER_MODE,
         fill=config.BORDER_VALUE,
         p=p if p is not None else 1.0,

@@ -26,7 +26,7 @@ def build(
         An Albumentations RandomBrightnessContrast transform (contrast off).
     """
     return A.RandomBrightnessContrast(
-        brightness_limit=brightness_limit if brightness_limit is not None else config.PIPELINE_1_BRIGHTNESS_LIMIT,
+        brightness_limit=brightness_limit if brightness_limit is not None else config.PIPELINE_BRIGHTNESS_LIMIT,
         contrast_limit=(0.0, 0.0),
         p=p if p is not None else 1.0,
     )
